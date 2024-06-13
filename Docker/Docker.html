@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Cheat Sheet</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        .container {
+            max-width: 800px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        h1, h2 {
+            color: #007BFF;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Docker Cheat Sheet</h1>
+
+        <div class="section">
+            <h2>Docker Basics</h2>
+            <pre><code>docker --version</code></pre>
+            <pre><code>docker version</code></pre>
+            <pre><code>docker info</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Working with Containers</h2>
+            <pre><code>docker ps</code></pre>
+            <pre><code>docker ps -a</code></pre>
+            <pre><code>docker run &lt;image&gt;</code></pre>
+            <pre><code>docker run -it &lt;image&gt;</code></pre>
+            <pre><code>docker run -d &lt;image&gt;</code></pre>
+            <pre><code>docker run -p &lt;host_port&gt;:&lt;container_port&gt; &lt;image&gt;</code></pre>
+            <pre><code>docker stop &lt;container_id&gt;</code></pre>
+            <pre><code>docker start &lt;container_id&gt;</code></pre>
+            <pre><code>docker restart &lt;container_id&gt;</code></pre>
+            <pre><code>docker rm &lt;container_id&gt;</code></pre>
+            <pre><code>docker container prune</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Working with Images</h2>
+            <pre><code>docker images</code></pre>
+            <pre><code>docker pull &lt;image&gt;</code></pre>
+            <pre><code>docker build -t &lt;image_name&gt; &lt;path_to_dockerfile&gt;</code></pre>
+            <pre><code>docker tag &lt;image_id&gt; &lt;repository&gt;:&lt;tag&gt;</code></pre>
+            <pre><code>docker push &lt;repository&gt;:&lt;tag&gt;</code></pre>
+            <pre><code>docker rmi &lt;image_id&gt;</code></pre>
+            <pre><code>docker image prune</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Docker Networks</h2>
+            <pre><code>docker network ls</code></pre>
+            <pre><code>docker network create &lt;network_name&gt;</code></pre>
+            <pre><code>docker network connect &lt;network_name&gt; &lt;container_id&gt;</code></pre>
+            <pre><code>docker network disconnect &lt;network_name&gt; &lt;container_id&gt;</code></pre>
+            <pre><code>docker network rm &lt;network_name&gt;</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Docker Volumes</h2>
+            <pre><code>docker volume ls</code></pre>
+            <pre><code>docker volume create &lt;volume_name&gt;</code></pre>
+            <pre><code>docker run -v &lt;volume_name&gt;:&lt;path_in_container&gt; &lt;image&gt;</code></pre>
+            <pre><code>docker volume rm &lt;volume_name&gt;</code></pre>
+            <pre><code>docker volume prune</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Docker Compose</h2>
+            <pre><code>docker-compose up</code></pre>
+            <pre><code>docker-compose up -d</code></pre>
+            <pre><code>docker-compose down</code></pre>
+            <pre><code>docker-compose logs</code></pre>
+            <pre><code>docker-compose build</code></pre>
+            <pre><code>docker-compose run &lt;service&gt; &lt;command&gt;</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Docker Container Management</h2>
+            <pre><code>docker logs &lt;container_id&gt;</code></pre>
+            <pre><code>docker logs -f &lt;container_id&gt;</code></pre>
+            <pre><code>docker inspect &lt;container_id&gt;</code></pre>
+            <pre><code>docker stats</code></pre>
+            <pre><code>docker exec -it &lt;container_id&gt; &lt;command&gt;</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Docker Clean-Up</h2>
+            <pre><code>docker system prune</code></pre>
+            <pre><code>docker system prune -a</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Examples</h2>
+            <p>MySQL container:</p>
+            <pre><code>docker run -d --name mysql1 --network home-network --ip 192.168.11.11 -e MYSQL_ROOT_PASSWORD=password -h mysql1 -p 5100:3306 -p 5101:22 -v /Users/username/Docker/mysql1/datadir:/var/lib/mysql -v /Users/username/Docker/mysql1/sshkey:/root/.ssh -v /Users/sinsausti/Docker/mysql1/confd:/etc/mysql/conf.d mysql</code></pre>
+            <p>WordpressDB container:</p>
+            <pre><code>docker run -d --name wordpressdb --network home-network --ip 192.168.11.12 -h wordpressdb -p 5200:3306 -p 5201:22 -v /Users/username/Docker/wordpressdb/datadir:/var/lib/mysql -v /Users/username/Docker/wordpressdb/sshkey:/root/.ssh -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=wordpressdb -e MYSQL_USER=worduser -e MYSQL_PASSWORD=wordpass mysql </code></pre>
+            <p>Wordpress container:</p>
+            <pre><code>docker run -d --name wordpress --network home-network --ip 192.168.11.13 -h wordpress -p 5300:80 -v /Users/username/Docker/wordpress/datadir:/var/www/html wordpress</code></pre>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
